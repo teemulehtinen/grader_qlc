@@ -52,10 +52,15 @@ The generation requirements for the language are also required, e.g.
       cmd: qlc_wrap /exercise/run.sh
 
     qlc:
-      # The optional language for output (default: en)
-      lang: en
-      # The command to produce QLC json
-      cmd: python -m qlcpy --json submitted.py
-      # Files having relevant content to see while answering the questions
+      # Command to produce QLC json
+      cmd: ["qlcpy", "--json", "submitted.py"]
+      # POST URL (%n is replaced by the path components of the current URL)
+      post_url: "%0/%1/module/chapter/hidden_exercise/"
+      # POST field name (will contain json string of the answer log)
+      post_field: log_json
+      # Optional files to display (default: all files submitted)
       files:
         - submitted.py
+        - input.txt
+      # Optional language (default: en)
+      lang: en

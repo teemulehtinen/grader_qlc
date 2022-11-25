@@ -1,3 +1,4 @@
+import json
 import os.path
 import yaml
 
@@ -12,13 +13,20 @@ the_dir = None
 
 def read_config():
   with open(CONFIG_FILE) as f:
-    return yaml.load(f)
+    full_config = yaml.safe_load(f)
+  config = full_config.get('qlc', {})
+  if not 'files' in config:
+    config['files'] = list(f['name'] for f in full_config.get('files', []))
+  return config
 
-def read_asset(name):
+def read_file(path):
+  with open(path, 'r') as f:
+    return f.read()
+
+def read_asset_file(name):
   if the_dir is None:
     the_dir = os.path.dirname(os.path.abspath(__file__))
-  with open(os.path.join(the_dir, name), 'r') as f:
-    return f.read()
+  return read_file(os.path.join(the_dir, name))
 
 def read_output():
   style_lines = []
@@ -52,12 +60,13 @@ def read_output():
     'max_points': max_points,
   }
 
-def rewrite_output(lang_code, previous_output):
-  html = read_asset(HTML_FILE)
-  js = read_asset(JS_FILE)
+def rewrite_output(lang_code, previous_output, qlc_data):
+  html = read_asset_file(HTML_FILE)
+  js = read_asset_file(JS_FILE)
   with open(OUTPUT_FILE, 'w') as f:
     f.write(html.format({
       **texts.get(lang_code, texts['en']),
       **previous_output,
       'js_code': js,
+      'qlc_json': json.dumps(qlc_data),
     }))
