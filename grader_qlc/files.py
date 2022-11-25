@@ -6,8 +6,8 @@ from .i18n import texts
 
 OUTPUT_FILE = '/feedback/out'
 CONFIG_FILE = '/exercise/config.yaml'
-HTML_FILE = 'mg_qlc/aplus_template.html'
-JS_FILE = 'mg_qlc/aplus_form.js'
+HTML_FILE = 'aplus_template.html'
+JS_FILE = 'aplus_form.js'
 
 def read_config():
   with open(CONFIG_FILE) as f:
