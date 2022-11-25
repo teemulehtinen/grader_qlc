@@ -1,6 +1,6 @@
 import os.path
 
-from i18n import texts
+from .i18n import texts
 
 OUTPUT_FILE = '/feedback/out'
 HTML_FILE = 'mg_qlc/aplus_template.html'
