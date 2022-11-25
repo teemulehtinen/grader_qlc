@@ -31,6 +31,7 @@ const SimpleQuizForm = (questions, callback) => {
     correct: q.options.map(o => o.correct || false),
     selected: q.options.map(_ => false),
     solved: false,
+    touched: false,
   }));
 
   const updateSolved = (qState) => {
@@ -46,6 +47,7 @@ const SimpleQuizForm = (questions, callback) => {
 
   const selectOption = (qIndex, optionIndex, isChecked, many) => {
     const qState = state[qIndex];
+    qState.touched = true;
     qState.selected = qState.selected.map(
       (old, i) => i === optionIndex ? isChecked : (many ? old : false)
     );
@@ -59,6 +61,7 @@ const SimpleQuizForm = (questions, callback) => {
       optionIndex,
       isChecked,
       state.filter(qs => qs.solved).length,
+      state.filter(qs => qs.touched).length,
       state.length
     ));
     return isSolved;

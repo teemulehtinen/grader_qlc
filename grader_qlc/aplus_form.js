@@ -1,10 +1,14 @@
 const qlcaug = (data) => {
 
   const log = [];
+  let logDirty = false;
+  let allTouched = false;
+  let allSolved = false;
 
   const logAdd = (entry) => {
     entry.time = new Date().getTime();
     log.push(entry);
+    logDirty = true;
   };
 
   const postUrl = (post_url_src) => {
@@ -16,22 +20,36 @@ const qlcaug = (data) => {
     return url;
   };
 
+  const logSend = () => {
+    if (logDirty) {
+      const body = new FormData();
+      body.append(data.post_field, JSON.stringify(log));
+      fetch(postUrl(data.post_url), {method: 'POST', body}).then(() => {
+        logDirty = false;
+      });
+    }
+  };
+
   logAdd({ type: 'init', files: data.files, qlcs: data.qlcs });
-  console.log(data);
+
+  // TODO display each file
 
   let form = document.getElementById('qlc-form');
-
   form.appendChild(SimpleQuizForm(
     data.qlcs,
-    (qIndex, optionIndex, isChecked, correct, max) => {
-      console.log(`state ${correct}/${max}`);
+    (qIndex, optionIndex, isChecked, solved, touched, total) => {
+      const qlc = data.qlcs[qIndex];
+      const opt = qlc.options[optionIndex];
+      logAdd({ qlc: qlc.type, opt: opt.type, val: opt.answer, checked: isChecked });
+      if (!allTouched && touched >= total) {
+        logSend();
+        allTouched = true;
+      } else if (!allSolved && solved >= total) {
+        logSend();
+        allSolved = true;
+      }
     }
   ));
 
-  form.addEventListener('submit', (event) => {
-    event.preventDefault();
-    const body = new FormData();
-    body.append(data.post_field, JSON.stringify(log));
-    fetch(postUrl(data.post_url), {method: 'POST', body});
-  });
+  addEventListener('beforeunload', (event) => logSend());
 };
