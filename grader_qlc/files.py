@@ -18,6 +18,8 @@ def read_config():
   return config
 
 def read_file(path):
+  if not os.path.exists(path):
+    return ''
   with open(path, 'r') as f:
     return f.read()
 
@@ -40,7 +42,7 @@ def read_output():
       else:
         if not in_style:
           if '<style>' in line:
-            in_style = True
+            in_style = not '</style>' in line
             style_lines.append(line)
           else:
             test_lines.append(line)
@@ -60,7 +62,7 @@ def rewrite_output(lang_code, previous_output, qlc_data):
   html = read_asset_file(HTML_FILE)
   js = read_asset_file(JS_FILE)
   with open(OUTPUT_FILE, 'w') as f:
-    f.write(html.format({
+    f.write(html.format(**{
       **texts.get(lang_code, texts['en']),
       **previous_output,
       'js_code': js,
