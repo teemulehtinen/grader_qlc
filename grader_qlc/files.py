@@ -9,8 +9,6 @@ CONFIG_FILE = '/exercise/config.yaml'
 HTML_FILE = 'mg_qlc/aplus_template.html'
 JS_FILE = 'mg_qlc/aplus_form.js'
 
-the_dir = None
-
 def read_config():
   with open(CONFIG_FILE) as f:
     full_config = yaml.safe_load(f)
@@ -24,9 +22,7 @@ def read_file(path):
     return f.read()
 
 def read_asset_file(name):
-  if the_dir is None:
-    the_dir = os.path.dirname(os.path.abspath(__file__))
-  return read_file(os.path.join(the_dir, name))
+  return read_file(os.path.join(os.path.dirname(os.path.abspath(__file__)), name))
 
 def read_output():
   style_lines = []
