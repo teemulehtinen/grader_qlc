@@ -7,7 +7,7 @@ from .i18n import texts
 OUTPUT_FILE = '/feedback/out'
 CONFIG_FILE = '/exercise/config.yaml'
 HTML_FILE = 'aplus_template.html'
-JS_FILE = 'aplus_form.js'
+JS_FILES = ['aplus_form.js', 'simple-quiz-form.js']
 
 def read_config():
   with open(CONFIG_FILE) as f:
@@ -60,7 +60,7 @@ def read_output():
 
 def rewrite_output(lang_code, previous_output, qlc_data):
   html = read_asset_file(HTML_FILE)
-  js = read_asset_file(JS_FILE)
+  js = '\n\n'.join(read_asset_file(name) for name in JS_FILES)
   with open(OUTPUT_FILE, 'w') as f:
     f.write(html.format(**{
       **texts.get(lang_code, texts['en']),

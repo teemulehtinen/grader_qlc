@@ -1,13 +1,13 @@
-const qlcaug = (json_data) => {
+const qlcaug = (data) => {
 
   const log = [];
 
-  const log_add = (entry) => {
+  const logAdd = (entry) => {
     entry.time = new Date().getTime();
     log.push(entry);
   };
 
-  const post_url = (post_url_src) => {
+  const postUrl = (post_url_src) => {
     const path = document.location.pathname.split('/').slice(1);
     let url = post_url_src;
     for (let i = 0; i < path.length; i++) {
@@ -16,15 +16,22 @@ const qlcaug = (json_data) => {
     return url;
   };
 
-  log_add({ type: 'init', files: json_data.files, qlc: json_data.qlcs });
-  console.log(json_data);
+  logAdd({ type: 'init', files: data.files, qlcs: data.qlcs });
+  console.log(data);
 
   let form = document.getElementById('qlc-form');
+
+  form.appendChild(SimpleQuizForm(
+    data.qlcs,
+    (qIndex, optionIndex, isChecked, correct, max) => {
+      console.log(`state ${correct}/${max}`);
+    }
+  ));
+
   form.addEventListener('submit', (event) => {
     event.preventDefault();
     const data = new FormData();
-    data.append(json_data.post_field, JSON.stringify(log));
-    fetch(post_url(json.post_url), {method: 'POST', body: data});
+    data.append(data.post_field, JSON.stringify(log));
+    fetch(postUrl(data.post_url), {method: 'POST', body: data});
   });
-
 };
