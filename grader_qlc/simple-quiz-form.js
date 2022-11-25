@@ -1,5 +1,32 @@
 const SimpleQuizForm = (questions, callback) => {
 
+  const styles = `
+    .q-wrap .q-item {
+      margin: 1em 0;
+    }
+    .q-wrap .q-item label {
+      display: block;
+      margin: 2px 0;
+      border: 1px solid lightgrey;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .q-wrap .q-item label:hover {
+      background-color: gainsboro;
+    }
+    .q-wrap .q-item label.incorrect {
+      background-color: salmon;
+      color: darkred;
+    }
+    .q-wrap .q-item label.correct {
+      background-color: springgreen;
+      color: green;
+    }
+    .q-wrap .q-item label .info {
+      margin-left: 2em;
+    }
+  `;
+
   const state = questions.map(q => ({
     correct: q.options.map(o => o.correct || false),
     selected: q.options.map(_ => false),
@@ -37,6 +64,12 @@ const SimpleQuizForm = (questions, callback) => {
     return isSolved;
   };
 
+  const addStyle = (css) => {
+    const style = document.createElement('style');
+    style.textContent = css;
+    document.head.appendChild(style);
+  };
+
   const mkElement = (tag, attrs, html, childNodes) => {
     const el = document.createElement(tag);
     if (attrs) {
@@ -56,6 +89,8 @@ const SimpleQuizForm = (questions, callback) => {
       label.appendChild(mkElement('span', { class: 'info' }, info));
     }
   };
+
+  addStyle(styles);
 
   return mkElement(
     'div',

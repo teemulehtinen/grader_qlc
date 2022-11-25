@@ -30,8 +30,8 @@ const qlcaug = (data) => {
 
   form.addEventListener('submit', (event) => {
     event.preventDefault();
-    const data = new FormData();
-    data.append(data.post_field, JSON.stringify(log));
-    fetch(postUrl(data.post_url), {method: 'POST', body: data});
+    const body = new FormData();
+    body.append(data.post_field, JSON.stringify(log));
+    fetch(postUrl(data.post_url), {method: 'POST', body});
   });
 };
