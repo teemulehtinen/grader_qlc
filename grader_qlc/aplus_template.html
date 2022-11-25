@@ -1,0 +1,30 @@
+{style_html}
+<ul class="nav nav-tabs" role="tablist">
+  <li role="presentation" class="active">
+    <a href="#qlc-tab" aria-controls="qlc-tab" role="tab" data-toggle="tab">
+      {qlc_tab}
+    </a>
+  </li>
+  <li role="presentation">
+    <a href="#test-tab" aria-controls="test-tab" role="tab" data-toggle="tab">
+      {test_tab}
+    </a>
+  </li>
+</ul>
+<div class="tab-content">
+  <div role="tabpanel" class="tab-pane active" id="qlc">
+    <h1>{title}</h1>
+    <p>{intro}</p>
+    <form id="qlc-form">
+      Test...
+    </form>
+    <script>
+      {js_code}
+    </script>
+  </div>
+  <div role="tabpanel" class="tab-pane" id="test">
+    {test_html}
+  </div>
+</div>
+
+{points_footer}
