@@ -52,6 +52,8 @@ The generation requirements for the language are also required, e.g.
       cmd: qlc_wrap /exercise/run.sh
 
     qlc:
+      # The optional language for output (default: en)
+      lang: en
       # The command to produce QLC json
       cmd: python -m qlcpy --json submitted.py
       # Files having relevant content to see while answering the questions

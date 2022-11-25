@@ -1,12 +1,18 @@
 import os.path
+import yaml
 
 from .i18n import texts
 
 OUTPUT_FILE = '/feedback/out'
+CONFIG_FILE = '/exercise/config.yaml'
 HTML_FILE = 'mg_qlc/aplus_template.html'
 JS_FILE = 'mg_qlc/aplus_form.js'
 
 the_dir = None
+
+def read_config():
+  with open(CONFIG_FILE) as f:
+    return yaml.load(f)
 
 def read_asset(name):
   if the_dir is None:

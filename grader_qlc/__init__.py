@@ -1,7 +1,7 @@
 import subprocess
 import sys
 
-from files import read_output, rewrite_output
+from .files import read_output, read_config, rewrite_output
 
 def wrap():
 
@@ -17,6 +17,7 @@ def wrap():
   # Augment QLCs if full grade
   if output['points'] >= output['max_points']:
     
+    config = read_config().get('qlc', {})
     # TODO qlc data
 
-    rewrite_output('fi', output)
+    rewrite_output(config.get('lang', 'en'), output)
