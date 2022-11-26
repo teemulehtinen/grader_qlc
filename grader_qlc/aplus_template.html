@@ -15,7 +15,10 @@
   <div role="tabpanel" class="tab-pane active" id="qlc-tab">
     <h1>{title}</h1>
     <p>{intro}</p>
-    <form id="qlc-form"></form>
+    <div class="row">
+      <div id="qlc-files" class="col-md-7"></div>
+      <div class="col-md-5"><form id="qlc-form"></form></div>
+    </div>
     <script>
       {js_code}
       qlcaug({qlc_json});

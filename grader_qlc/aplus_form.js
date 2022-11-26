@@ -32,7 +32,19 @@ const qlcaug = (data) => {
 
   logAdd({ type: 'init', files: data.files, qlcs: data.qlcs });
 
-  // TODO display each file
+  let div = document.getElementById('qlc-files');
+  data.files.forEach(entry => {
+    let h4 = document.createElement('h4');
+    h4.innerHTML = entry[0];
+    div.appendChild(h4);
+    let pre = document.createElement('pre');
+    pre.setAttribute('class', 'hljs');
+    pre.innerHTML = entry[1];
+    div.appendChild(pre);
+    if (hljs) {
+      hljs.highlightElement(pre);
+    }
+  });
 
   let form = document.getElementById('qlc-form');
   form.appendChild(SimpleQuizForm(

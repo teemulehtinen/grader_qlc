@@ -127,6 +127,9 @@ const SimpleQuizForm = (questions, callback) => {
               label.parentNode.querySelectorAll('label').forEach(
                 (l, i) => displayInfo(l, q.options[i].info)
               );
+              label.parentNode.querySelectorAll('input').forEach(
+                (e) => { e.disabled = true; }
+              );
             } else {
               displayInfo(label, o.info);
             }
