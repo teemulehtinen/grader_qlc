@@ -1,4 +1,4 @@
-const qlcaug = (data) => {
+window.QLCAugment = window.QLCAugment || ((data) => {
 
   const log = [];
   let logDirty = false;
@@ -31,20 +31,7 @@ const qlcaug = (data) => {
   };
 
   logAdd({ type: 'init', files: data.files, qlcs: data.qlcs });
-
-  let div = document.getElementById('qlc-files');
-  data.files.forEach(entry => {
-    let h4 = document.createElement('h4');
-    h4.innerHTML = entry[0];
-    div.appendChild(h4);
-    let pre = document.createElement('pre');
-    pre.setAttribute('class', 'hljs');
-    pre.innerHTML = entry[1];
-    div.appendChild(pre);
-    if (hljs) {
-      hljs.highlightElement(pre);
-    }
-  });
+  addEventListener('beforeunload', (event) => logSend());
 
   let form = document.getElementById('qlc-form');
   form.appendChild(SimpleQuizForm(
@@ -63,5 +50,20 @@ const qlcaug = (data) => {
     }
   ));
 
-  addEventListener('beforeunload', (event) => logSend());
-};
+  let div = document.getElementById('qlc-files');
+  data.files.forEach(entry => {
+    let h4 = document.createElement('h4');
+    h4.innerHTML = entry[0];
+    div.appendChild(h4);
+    let pre = document.createElement('pre');
+    pre.setAttribute('class', 'hljs');
+    pre.innerHTML = entry[1];
+    div.appendChild(pre);
+  });
+  const style = document.head.lastElementChild;
+  style.textContent = (
+    style.textContent +
+    '\n.qlc-files p { display: none: }'
+    +'\n.qlc-files table.src tr td.src { white-space: pre; }'
+  );
+});

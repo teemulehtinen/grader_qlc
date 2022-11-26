@@ -1,4 +1,4 @@
-const SimpleQuizForm = (questions, callback) => {
+window.SimpleQuizForm = window.SimpleQuizForm || ((questions, callback) => {
 
   const styles = `
     .q-wrap .q-item {
@@ -139,4 +139,4 @@ const SimpleQuizForm = (questions, callback) => {
       );
     })
   );
-};
+});
