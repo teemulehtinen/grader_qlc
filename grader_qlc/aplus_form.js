@@ -63,7 +63,7 @@ window.QLCAugment = window.QLCAugment || ((data) => {
   const style = document.head.lastElementChild;
   style.textContent = (
     style.textContent +
-    '\n#qlc-files p { display: none: }'
+    '\n#qlc-files p { display: none; }'
     //+'\n#qlc-files table.src tr td.src { white-space: pre; }'
   );
 

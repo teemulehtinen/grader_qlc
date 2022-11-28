@@ -24,6 +24,8 @@ window.SimpleQuizForm = window.SimpleQuizForm || ((questions, callback) => {
     }
     .q-wrap .q-item label .info {
       margin-left: 2em;
+      font-weight: normal;
+      font-style: italic;
     }
   `;
 
