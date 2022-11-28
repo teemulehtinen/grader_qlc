@@ -30,6 +30,8 @@ def read_output():
   style_lines = []
   test_lines = []
   point_lines = []
+  points = 0
+  max_points = 10
   with open(OUTPUT_FILE) as f:
     in_style = False
     for line in f:
