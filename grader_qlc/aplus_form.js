@@ -56,9 +56,12 @@ window.QLCAugment = window.QLCAugment || ((data) => {
     h4.innerHTML = entry[0];
     div.appendChild(h4);
     let pre = document.createElement('pre');
-    pre.setAttribute('class', 'hljs');
+    //pre.setAttribute('class', 'hljs');
     pre.innerHTML = entry[1];
     div.appendChild(pre);
+    if (hljs !== undefined) {
+      hljs.highlightElement(pre);
+    }
   });
   const style = document.head.lastElementChild;
   style.textContent = (
