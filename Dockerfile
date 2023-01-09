@@ -1,6 +1,6 @@
 FROM apluslms/grade-python:math-3.9-4.5-4.5
 
-ARG GRADE_QLC_VER=v1.0.0
+ARG GRADE_QLC_VER=v1.0.1
 ARG QLCPY_VER=1.0.9
 
 RUN pip_install \

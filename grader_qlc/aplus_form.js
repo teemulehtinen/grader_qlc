@@ -59,8 +59,8 @@ window.QLCAugment = window.QLCAugment || ((data) => {
     //pre.setAttribute('class', 'hljs');
     pre.innerHTML = entry[1];
     div.appendChild(pre);
-    if (hljs !== undefined) {
-      hljs.highlightElement(pre);
+    if ($ !== undefined) {
+      $(pre).highlightCode();
     }
   });
   const style = document.head.lastElementChild;
