@@ -39,7 +39,14 @@ window.QLCAugment = window.QLCAugment || ((data) => {
     (qIndex, optionIndex, isChecked, solved, touched, total) => {
       const qlc = data.qlcs[qIndex];
       const opt = qlc.options[optionIndex];
-      logAdd({ qlc: qlc.type, opt: opt.type, val: opt.answer, checked: isChecked });
+      logAdd({
+        qlc: qlc.type,
+        opt: opt.type,
+        answer: opt.answer,
+        correct: opt.correct,
+        checked: isChecked,
+        solved,
+      });
       if (!allTouched && touched >= total) {
         logSend();
         allTouched = true;
