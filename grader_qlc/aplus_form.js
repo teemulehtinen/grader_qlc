@@ -5,10 +5,10 @@ window.QLCAugment = window.QLCAugment || ((data) => {
   let allTouched = false;
   let allSolved = false;
 
-  const logAdd = (entry) => {
+  const logAdd = (entry, dirty) => {
     entry.time = new Date().getTime();
     log.push(entry);
-    logDirty = true;
+    logDirty = dirty === undefined || dirty;
   };
 
   const postUrl = (post_url_src) => {
@@ -30,7 +30,7 @@ window.QLCAugment = window.QLCAugment || ((data) => {
     }
   };
 
-  logAdd({ type: 'init', files: data.files, qlcs: data.qlcs });
+  logAdd({ type: 'init', files: data.files, qlcs: data.qlcs }, false);
   addEventListener('beforeunload', (event) => logSend());
 
   let form = document.getElementById('qlc-form');
