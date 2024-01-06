@@ -1,10 +1,11 @@
 import os
 import unittest
-import yaml
+import json
 
 from grader_qlc import files
-from .sample_content import CONFIG_CONTENT, OUT_CONTENT
-
+from .sample_content import (
+  CONFIG_CONTENT, OUT_CONTENT, QLC_DATA, QLC_POST_DATA
+)
 class TestFiles(unittest.TestCase):
 
   def setFile(self, name, content):
@@ -38,8 +39,15 @@ class TestFiles(unittest.TestCase):
     self.assertEqual(out['max_points'], 10)
 
   def test_write(self):
-    files.rewrite_output(None, files.read_output(), {'i_am': 'qlc_data'})
-    with open(files.OUTPUT_FILE, 'r') as f:
-      out = f.read()
-    self.assertTrue('qlcaug({"i_am": "qlc_data"});' in out)
-    self.assertTrue('My test results here!' in out)
+    initial_output = files.read_output()
+    files.rewrite_output('en', initial_output, QLC_DATA)
+    out = files.read_output()
+    self.assertTrue(json.dumps(QLC_DATA) in out['test_html'])
+    self.assertEqual(out['points'], 10)
+    self.assertEqual(out['max_points'], 10)
+    files.rewrite_output('en', initial_output, QLC_POST_DATA, True)
+    out = files.read_output()
+    self.assertTrue(json.dumps(QLC_POST_DATA) in out['test_html']) 
+    self.assertTrue('<script>' in out['test_html'])
+    self.assertEqual(out['points'], 10)
+    self.assertEqual(out['max_points'], 10)

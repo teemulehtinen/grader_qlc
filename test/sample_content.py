@@ -28,5 +28,15 @@ TotalPoints: 10
 MaxPoints: 10
 """
 
+QLC_DATA = {
+  "qlcs": ["qlc1", "qlc2"],
+  "files": [["file1", "content1"], ["file2", "content2"]],
+}
+QLC_POST_DATA = {
+  **QLC_DATA,
+  "post_url": "/form/store",
+  "post_field": "qlc_data",
+}
+
 SUBMITTED = "submitted-content"
-QLC_JSON = '["aa", "be", "ce"]'
+QLC_JSON = ["aa", "be", "ce"]

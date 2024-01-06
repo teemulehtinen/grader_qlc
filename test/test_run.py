@@ -1,5 +1,6 @@
 import os
 import unittest
+import json
 
 from grader_qlc import files, run_wrapped
 from .sample_content import CONFIG_CONTENT, OUT_CONTENT, SUBMITTED, QLC_JSON
@@ -16,7 +17,7 @@ class TestFiles(unittest.TestCase):
     self.setFile(files.OUTPUT_FILE, OUT_CONTENT)
     self.setFile(files.CONFIG_FILE, CONFIG_CONTENT)
     self.setFile('submitted.py', SUBMITTED)
-    self.setFile('sample.json', QLC_JSON)
+    self.setFile('sample.json', json.dumps(QLC_JSON))
   
   def tearDown(self):
     os.remove(files.OUTPUT_FILE)
@@ -26,7 +27,12 @@ class TestFiles(unittest.TestCase):
 
   def test_run(self):
     run_wrapped(['sleep', '0'])
+    expected_data = json.dumps({
+      "qlcs": QLC_JSON,
+      "files": [["submitted.py", SUBMITTED]],
+      "post_url": "%0/%1/foo/",
+      "post_field": "log_json"
+    })
     with open(files.OUTPUT_FILE, 'r') as f:
       out = f.read()
-    self.assertTrue('qlcaug({"qlcs": ["aa", "be", "ce"], "files": [["submitted.py", "submitted-content"]], "post_url": "%0/%1/foo/", "post_field": "log_json"});' in out)
-    self.assertTrue('My test results here!' in out)
+    self.assertTrue(expected_data in out)
