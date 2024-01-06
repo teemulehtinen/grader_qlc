@@ -37,7 +37,7 @@ the particular programming language that is used in the exercise.
   FROM ...
 
   RUN pip_install \
-    https://github.com/teemulehtinen/grader_qlc/archive/v1.0.1.tar.gz
+    https://github.com/teemulehtinen/grader_qlc/archive/v1.0.3.tar.gz
 ```
 
 The generation requirements for the language are also required, e.g.
