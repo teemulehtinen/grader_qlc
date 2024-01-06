@@ -6,19 +6,22 @@ from .files import read_output, read_config, read_file, rewrite_output
 
 def run_qlc(config):
   res = subprocess.run(config.get('cmd'), capture_output=True)
-  return {
+  data = {
     'qlcs': json.loads(res.stdout),
     'files': list([name, read_file(name)] for name in config.get('files', [])),
-    'post_url': config.get('post_url'),
-    'post_field': config.get('post_field'),
   }
+  for key in ('post_url', 'post_field'):
+    if key in config:
+      data[key] = config[key]
+  return data
 
 def run_wrapped(cmd_list):
   subprocess.run(cmd_list)
   output = read_output()
   if output['points'] >= output['max_points']:
     config = read_config()
-    rewrite_output(config.get('lang'), output, run_qlc(config))
+    data = run_qlc(config)
+    rewrite_output(config.get('lang'), output, data, 'post_url' in data)
 
 def wrap():
   if len(sys.argv) < 2:
