@@ -302,7 +302,7 @@ function FollowUpInit(exDiv) {
     const button = mkElement(
       'button',
       {class: 'btn btn-primary', type: 'submit'},
-      'Grade'
+      exForm.getAttribute("data-grade")
     );
     button.addEventListener('click', evt => {
       evt.preventDefault();

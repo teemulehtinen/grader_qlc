@@ -1,7 +1,7 @@
 FROM apluslms/grade-python:3.9-4.8-4.5
 
-ARG GRADE_QLC_VER=v1.0.3
-ARG QLCPY_VER=1.0.13
+ARG GRADE_QLC_VER=v1.0.4
+ARG QLCPY_VER=1.0.14
 
 RUN pip_install \
     # Manipulates grader output

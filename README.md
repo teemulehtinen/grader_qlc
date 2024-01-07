@@ -80,7 +80,7 @@ container:
 
 qlc:
   # Command to produce QLC json, see qlcpy --help
-  cmd: ["qlcpy", "--json", "submitted.py"]
+  cmd: ["qlcpy", "--json", "-un", "5", submitted.py"]
 
   # Optional files to display (default: all files submitted)
   files:
@@ -94,3 +94,15 @@ qlc:
   post_url: "%0/%1/module/chapter/hidden_exercise/"
   post_field: log_json
 ```
+
+#### Usage
+
+```
+qlc_wrap [-LANGUAGE_CODE] grading command
+```
+If the first argument starts with `-`, it signals a language code. The 
+configured `qlc.cmd` parts can include `$LANG` that is replaced with the
+language code, `en` by default.
+
+The suggested QLC generators support a plentiful amount of options that are
+described in their documentation.
