@@ -1,22 +1,13 @@
 {% extends 'access/exercise_frame.html' %}
 {% block exercise %}
 {% if not result.error %}    
-<form method="post" action="{{ post_url }}">
+<form method="post" action="{{ post_url }}" data-grade="{% if LANGUAGE_CODE == "fi" %}Arvostele vastaukset{% else %}Grade the answers{% endif %}">
 {% if request.POST.qlc %}
-{% if LANGUAGE_CODE == "fi" %}
-<p>Avaa tehtävä oppimateriaalin luvussa nähdäksesi vastaukset.</p>
-{% else %}
-<p>Open the exercise in the chapter to view the answers.</p>
-{% endif %}
+<p>{% if LANGUAGE_CODE == "fi" %}Avaa tehtävä oppimateriaalin luvussa nähdäksesi vastaukset.{% else %}Open the exercise in the chapter to view the answers.{% endif %}</p>
 <script type="application/json" data-id="qlc-data">{% autoescape off %}{{ request.POST.qlc }}{% endautoescape %}</script>
 {% else %}
-{% if LANGUAGE_CODE == "fi" %}
-<p>Voit aloittaa tämän tehtävään sen jälkeen, kun ohjelmointitehtävä on läpäisty.</p>
-<p><button class="qlc-generate">Luo minulle kysely</button></p>
-{% else %}
-<p>You can start this exercise after the programming exercise is successfully completed.</p>
-<p><button class="qlc-generate">Generate my questionnaire</button></p>
-{% endif %}
+<p>{% if LANGUAGE_CODE == "fi" %}Voit aloittaa tämän tehtävään sen jälkeen, kun ohjelmointitehtävä on läpäisty.{% else %}You can start this exercise after the programming exercise is successfully completed.{% endif %}</p>
+<p><button class="qlc-generate">{% if LANGUAGE_CODE == "fi" %}Luo minulle kysely{% else %}Generate my questionnaire{% endif %}</button></p>
 {% endif %}
 </form>
 {% endif %}
