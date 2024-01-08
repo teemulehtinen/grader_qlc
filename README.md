@@ -80,7 +80,7 @@ container:
 
 qlc:
   # Command to produce QLC json, see qlcpy --help
-  cmd: ["qlcpy", "--json", "-un", "5", submitted.py"]
+  cmd: ["qlcpy", "--json", "-un", "5", "submitted.py"]
 
   # Optional files to display (default: all files submitted)
   files:
@@ -98,11 +98,13 @@ qlc:
 #### Usage
 
 ```
-qlc_wrap [-LANGUAGE_CODE] grading command
+qlc_wrap [-VARIABLE=value] grading command
 ```
-If the first argument starts with `-`, it signals a language code. The 
-configured `qlc.cmd` parts can include `$LANG` that is replaced with the
-language code, `en` by default.
+If the first argument starts with `-`, it defines a variable to be used in the
+configured `qlc.cmd`. A variable `$VARIABLE` can be included in the command
+parts and it is replaced with the given value before calling. For example
+`qlc_wrap -LANG=en python -m unittest` could compliment cmd
+`["qlcpy", "-l", "$LANG", "submitted.py"]`.
 
 The suggested QLC generators support a plentiful amount of options that are
 described in their documentation.
