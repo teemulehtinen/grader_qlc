@@ -164,9 +164,10 @@ function FollowUpInit(exDiv) {
       const pre = mkElement('pre', {}, entry[1]);
       fileDiv.appendChild(pre);
       if ($ !== undefined) {
-        $(pre).highlightCode();
+        $(pre).highlightCode({noCopy: true, noDownload: true});
       }
     });
+    fileDiv.querySelectorAll('div > p').forEach(e => e.remove());
     return mkElement('div', {class: 'row'}, '', [qlcDiv, fileDiv]);
   }
 
