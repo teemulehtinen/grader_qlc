@@ -120,7 +120,7 @@ function FollowUpInit(exDiv) {
       const body = new FormData();
       body.append('qlc', JSON.stringify({...data, log}));
       for (let i = 0; i < 5; i++) {
-        if (solved / 5 * total > i) {
+        if (solved / total * 5 > i) {
           body.append(`p${i + 1}`, 1);
         }
       }
