@@ -64,17 +64,23 @@ function FollowUpInit(exDiv) {
       showAlert(isSilent, 'danger', errors.location);
       return null;
     }
-    const prLinks = prDiv.querySelectorAll(linkSelect('has(.badge-success)'));
+    let prLinks = prDiv.querySelectorAll(linkSelect('has(.badge-success)'));
+    let isMissingPoints = false;
     if (prLinks.length == 0) {
-      showAlert(isSilent, 'warning', errors.missing);
-      return null;
+      prLinks = prDiv.querySelectorAll(linkSelect('has(.badge-warning'));
+      isMissingPoints = true;
+      if (prLinks.length == 0) {
+        showAlert(isSilent, 'warning', errors.missing);
+        return null;
+      }
     }
-    return await loadQLCData(prLinks, isSilent);
+    return await loadQLCData(prLinks, isSilent, isMissingPoints);
   }
 
-  async function loadQLCData(links, isSilent) {
+  async function loadQLCData(links, isSilent, isMissingPoints) {
     const errors = {
       status: 'Failed to load previous submission! Try again or contact staff.',
+      points: 'You must first fix the remaining problems in the previous exercise.',
       json: 'Failed to read exercise data! Try again or contact staff.',
     };
     const res = await fetch(links[0].getAttribute('href'));
@@ -86,7 +92,7 @@ function FollowUpInit(exDiv) {
     const elem = html.querySelector('.exercise-content [data-id="qlc-data"]');
     const data = elem ? JSON.parse(elem.textContent) : {};
     if (!data.qlcs || !data.files) {
-      showAlert(isSilent, 'danger', errors.json);
+      showAlert(isSilent, 'danger', isMissingPoints ? errors.points : errors.json);
       return null;
     }
     return data;
